@@ -1,72 +1,171 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-typedef int (*Operation)(int, int);
+typedef struct Node {
+    int data;
+    struct Node* next;
+} Node;
 
-int add(int a, int b) {
-    return a + b;
+typedef struct Stack {
+    Node* top;
+} Stack;
+
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
 }
 
-int subtract(int a, int b) {
-    return a - b;
+Stack* createStack() {
+    Stack* stack = (Stack*)malloc(sizeof(Stack));
+    stack->top = NULL;
+    return stack;
 }
 
-int multiply(int a, int b) {
-    return a * b;
+bool isEmpty(Stack* stack) {
+    return stack->top == NULL;
 }
 
-int divide(int a, int b) {
-    return a / b;
+void push(Stack* stack, int data) {
+    Node* newNode = createNode(data);
+    newNode->next = stack->top;
+    stack->top = newNode;
 }
 
-int processInput(int a, int b, char operator, Operation op) {
-    return op(a, b);
+int pop(Stack* stack) {
+    if (isEmpty(stack)) {
+        printf("Stack Underflow\n");
+        return -1;
+    }
+
+    Node* temp = stack->top;
+    stack->top = stack->top->next;
+    int popped = temp->data;
+    free(temp);
+    return popped;
+}
+
+int peek(Stack* stack) {
+    if (isEmpty(stack)) {
+        printf("Stack is empty\n");
+        return -1;
+    }
+
+    return stack->top->data;
+}
+
+bool isOperator(char c) {
+    return (c == '+' || c == '-' || c == '*' || c == '/');
+}
+
+int performOperation(int operand1, int operand2, char operator) {
+    switch (operator) {
+        case '+':
+            return operand1 + operand2;
+        case '-':
+            return operand1 - operand2;
+        case '*':
+            return operand1 * operand2;
+        case '/':
+            return operand1 / operand2;
+        default:
+            return 0;
+    }
+}
+
+int getPrecedence(char operator) {
+    if (operator == '*' || operator == '/')
+        return 2;
+    else if (operator == '+' || operator == '-')
+        return 1;
+    else
+        return 0;
+}
+
+int calculateExpression(char* expression) {
+    Stack* operandStack = createStack();
+    Stack* operatorStack = createStack();
+
+    for (int i = 0; expression[i] != '\0'; i++) {
+        if (expression[i] == ' ')
+            continue;
+
+        if (expression[i] >= '0' && expression[i] <= '9') {
+            int operand = 0;
+            while (expression[i] >= '0' && expression[i] <= '9') {
+                operand = operand * 10 + (expression[i] - '0');
+                i++;
+            }
+            i--;
+
+            push(operandStack, operand);
+        }
+        else if (expression[i] == '(') {
+            push(operatorStack, expression[i]);
+        }
+        else if (expression[i] == ')') {
+            while (!isEmpty(operatorStack) && peek(operatorStack) != '(') {
+                int operand2 = pop(operandStack);
+                int operand1 = pop(operandStack);
+                char operator = pop(operatorStack);
+                int result = performOperation(operand1, operand2, operator);
+                push(operandStack, result);
+            }
+
+            if (!isEmpty(operatorStack) && peek(operatorStack) == '(') {
+                pop(operatorStack);
+            }
+        }
+        else if (isOperator(expression[i])) {
+            while (!isEmpty(operatorStack) && peek(operatorStack) != '(' && getPrecedence(peek(operatorStack)) >= getPrecedence(expression[i])) {
+                int operand2 = pop(operandStack);
+                int operand1 = pop(operandStack);
+                char operator = pop(operatorStack);
+                int result = performOperation(operand1, operand2, operator);
+                push(operandStack, result);
+            }
+
+            push(operatorStack, expression[i]);
+        }
+    }
+
+    while (!isEmpty(operatorStack)) {
+        int operand2 = pop(operandStack);
+        int operand1 = pop(operandStack);
+        char operator = pop(operatorStack);
+        int result = performOperation(operand1, operand2, operator);
+        push(operandStack, result);
+    }
+
+    return pop(operandStack);
 }
 
 int main() {
-    int num1, num2, result;
-    char operator;
-    char exitKey;
+    char input[100];
+    char ch;
+    int index = 0;
 
-    Operation operation;
+    printf("Enter expressions (press 'Esc' or 'q' to exit):\n");
 
-    while (1) {
-        printf("Enter the first number: ");
-        scanf("%d", &num1);
+    while (true) {
+        ch = getchar();
 
-        printf("Enter the operator (+, -, *, /): ");
-        scanf(" %c", &operator);
-
-        printf("Enter the second number: ");
-        scanf("%d", &num2);
-
-
-        // Assign the appropriate function pointer based on the operator
-        switch (operator) {
-            case '+':
-                operation = add;
-                break;
-            case '-':
-                operation = subtract;
-                break;
-            case '*':
-                operation = multiply;
-                break;
-            case '/':
-                operation = divide;
-                break;
-            default:
-                printf("Invalid operator! Please try again.\n");
-                continue;  // Restart the loop if the operator is invalid
-        }
-
-        // Perform the operation and display the result
-        result = processInput(num1, num2, operator, operation);
-        printf("Result: %d\n\n", result);
-
-        printf("Press 'q' to exit or any other key to continue...\n");
-        scanf(" %c", &exitKey);
-        if (exitKey == 'q')  // Check if 'q' key is pressed
+        if (ch == 27 || ch == 'q') { // 'Esc' key or 'q' to exit
             break;
+        }
+        else if (ch == '\n') { // Enter key
+            input[index] = '\0';
+            int result = calculateExpression(input);
+            printf("Result: %d\n", result);
+            index = 0;
+            printf("Enter expressions (press 'Esc' or 'q' to exit):\n");
+        }
+        else {
+            input[index++] = ch;
+            printf("%c", ch);
+        }
     }
 
     return 0;

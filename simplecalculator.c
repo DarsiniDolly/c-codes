@@ -1,4 +1,4 @@
-
+// Implemented stack using linked list to create a normal calculator //
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -75,7 +75,7 @@ int performOperation(int operand1, int operand2, char operator) {
             return 0;
     }
 }
-
+// applied BODMAS rule//
 int getPrecedence(char operator) {
     if (operator == '*' || operator == '/')
         return 2;
@@ -147,13 +147,13 @@ int main() {
     char input[100];
     char ch;
     int index = 0;
-
-    printf("Enter expressions (press 'Esc' or 'q' to exit):\n");
+// if the user presses q it will exit or else it will process until pressess q//
+    printf("Enter expressions (press 'q' to exit):\n");
 
     while (true) {
         ch = getchar();
 
-        if (ch == 27 || ch == 'q') { // 'Esc' key or 'q' to exit
+        if ( ch == 'q') { //  'q' to exit
             break;
         }
         else if (ch == '\n') { // Enter key
@@ -161,7 +161,7 @@ int main() {
             int result = calculateExpression(input);
             printf("Result: %d\n", result);
             index = 0;
-            printf("Enter expressions (press 'Esc' or 'q' to exit):\n");
+            printf("Enter expressions (press'q' to exit):\n");
         }
         else {
             input[index++] = ch;

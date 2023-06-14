@@ -1,33 +1,91 @@
 #include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <stdlib.h>
-int mark_summation();
 
-
-int marks_summation(int* marks, int number_of_students, char gender) {
-  int i, sum = 0;
-    for (i = (gender == 'b' ? 0 : 1); i < number_of_students; i = i + 2)
-        sum += *(marks + i);
-    return sum;
-}
+struct Student {
+    char fname[50];
+    int roll;
+    int mark1;
+    int mark2;
+    int mark3;
+    char gender;
+    int total;
+    char result;
+}s[100];
 
 int main() {
-    int number_of_students;
-    char gender;
-    int sum;
-  
-    scanf("%d", &number_of_students);
-    int *marks = (int *) malloc(number_of_students * sizeof (int));
- 
-    for (int student = 0; student < number_of_students; student++) {
-        scanf("%d", (marks + student));
+    int i, k, rn;
+    char g;
+    int pass = 0, fail = 0; 
+
+    printf("Enter information of students:\n");
+
+    // storing information
+    for (i = 0; i < 3; i++) {
+        s[i].roll = i + 1;
+        printf("\nFor roll number %d,\n", s[i].roll);
+        printf("Enter name: ");
+        scanf("%s", s[i].fname);
+        printf("Enter mark1: ");
+        scanf("%d", &s[i].mark1);
+        printf("Enter mark2: ");
+        scanf("%d", &s[i].mark2);
+        printf("Enter mark3: ");
+        scanf("%d", &s[i].mark3);
+        printf("Enter gender (M/F): ");
+        scanf(" %s", &s[i].gender);
+        s[i].total = s[i].mark1 + s[i].mark2 + s[i].mark3;
+
+        // Determine pass/fail
+        if (s[i].total > 150) {
+            s[i].result = 'P';
+            pass++;
+        } else {
+            s[i].result = 'F';
+            fail++;
+        }
     }
-    
-    scanf(" %c", &gender);
-    sum = marks_summation(marks, number_of_students, gender);
-    printf("%d", sum);
-    free(marks);
- 
+
+    printf("\nDisplaying Information:\n\n");
+
+    // displaying information
+    for (i = 0; i < 3; i++) {
+        printf("\nRoll number: %d\n", i + 1);
+        printf("Name: %s\n", s[i].fname);
+        printf("Mark1: %d\n", s[i].mark1);
+        printf("Mark2: %d\n", s[i].mark2);
+        printf("Mark3: %d\n", s[i].mark3);
+        printf("Gender: %c\n", s[i].gender);
+        printf("Total: %d\n", s[i].total);
+        printf("Result: %s\n", s[i].result == 'P' ? "Passed" : "Failed");
+    }
+
+    printf("\nNumber of students passed: %d\n", pass);
+    printf("Number of students failed: %d\n", fail);
+
+    printf("\nEnter the roll number to find the student details: \n");
+    scanf("%d", &rn);
+
+    for (i = 0; i < 3; i++) {
+        if (s[i].roll == rn) {
+            k = i; // for finding the position of the student
+            printf("\nRecord found at position no %d \n", k + 1);
+            printf("Name: %s\n", s[k].fname);
+            printf("Roll number: %d\n", s[k].roll);
+            printf("Marks: %d\n", s[k].total);
+            printf("Result: %s\n", s[k].result == 'P' ? "Passed" : "Failed");
+        }
+    }
+
+    printf("\nEnter the gender (M/F) to find the student details: \n");
+    scanf(" %c", &g);
+
+    for (i = 0; i < 3; i++) {
+        if (s[i].gender == g) {
+            printf("\nName: %s\n", s[i].fname);
+            printf("Roll number: %d\n", s[i].roll);
+            printf("Marks: %d\n", s[i].total);
+            printf("Result: %s\n", s[i].result == 'P' ? "Passed" : "Failed");
+        }
+    }
+
     return 0;
 }

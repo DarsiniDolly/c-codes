@@ -9,7 +9,7 @@ struct Student {
     char gender;
     int total;
     char result;
-}s[100];
+} s[100];
 
 int main() {
     int i, k, rn;
@@ -31,7 +31,7 @@ int main() {
         printf("Enter mark3: ");
         scanf("%d", &s[i].mark3);
         printf("Enter gender (M/F): ");
-        scanf(" %s", &s[i].gender);
+        scanf(" %c", &s[i].gender); 
         s[i].total = s[i].mark1 + s[i].mark2 + s[i].mark3;
 
         // Determine pass/fail
@@ -72,6 +72,27 @@ int main() {
             printf("Roll number: %d\n", s[k].roll);
             printf("Marks: %d\n", s[k].total);
             printf("Result: %s\n", s[k].result == 'P' ? "Passed" : "Failed");
+
+            printf("\nUpdate marks for the student (roll number %d):\n", s[k].roll);
+            printf("Enter new mark1: ");
+            scanf("%d", &s[k].mark1);
+            printf("Enter new mark2: ");
+            scanf("%d", &s[k].mark2);
+            printf("Enter new mark3: ");
+            scanf("%d", &s[k].mark3);
+            s[k].total = s[k].mark1 + s[k].mark2 + s[k].mark3;
+
+            // Update pass/fail status
+            if (s[k].total > 150) {
+                s[k].result = 'P';
+            } else {
+                s[k].result = 'F';
+            }
+
+            printf("\nMarks updated successfully!\n");
+            printf("Updated total: %d\n", s[k].total);
+            printf("Updated result: %s\n", s[k].result == 'P' ? "Passed" : "Failed");
+            break;
         }
     }
 

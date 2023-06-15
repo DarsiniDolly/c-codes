@@ -16,7 +16,7 @@ int main() {
     int i, k, rn;
     char g;
     int pass = 0, fail = 0; 
-    int count = 3; 
+    int count = 5; 
 
     printf("Enter information of students:\n");
 
@@ -37,7 +37,7 @@ int main() {
         s[i].total = s[i].mark1 + s[i].mark2 + s[i].mark3;
 
         // Determine pass/fail
-        if (s[i].total > 150) {
+        if (s[i].total > 170) {
             s[i].result = 'P';
             pass++;
         } else {
@@ -64,10 +64,10 @@ int main() {
     printf("Number of students failed: %d\n", fail);
 
 
-    printf("\nEnter the gender (M/F) to find the student details: \n");
+    printf("\nEnter the gender  to find the student details: \n");
     scanf(" %c", &g);
 
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < count; i++) {
         if (s[i].gender == g) {
             printf("\nName: %s\n", s[i].fname);
             printf("Roll number: %d\n", s[i].roll);
@@ -133,7 +133,7 @@ int main() {
             s[k].total = s[k].mark1 + s[k].mark2 + s[k].mark3;
 
             // Update pass/fail status
-            if (s[k].total > 150) {
+            if (s[k].total > 170) {
                 s[k].result = 'P';
             } else {
                 s[k].result = 'F';

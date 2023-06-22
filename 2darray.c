@@ -4,18 +4,18 @@
 int main()
 {
     int a[3][3],b[3][3],add[3][3],i,j;
-    for(int i=0;i<3;++i)
+    for(i=0;i<3;++i)
     {
-        for(int j=0;j<3;++j)
+        for(j=0;j<3;++j)
         {
             printf("Enter a%d%d: ", i + 1, j + 1);
             scanf("%d",&a[i][j]);
         }
     }
 
-    for(int i=0;i<3;++i)
+    for(i=0;i<3;++i)
     {
-        for(int j=0;j<3;++j)
+        for(j=0;j<3;++j)
         {
             printf("Enter b%d%d: ", i + 1, j + 1);
             scanf("%d",&b[i][j]);
@@ -30,9 +30,9 @@ int main()
         }
     }
     
-     for(int i=0;i<3;++i)
+     for(i=0;i<3;++i)
     {
-        for(int j=0;j<3;++j)
+        for(j=0;j<3;++j)
         {
             printf("add %d%d :%d", i+1,j+1, add[i][j]);
             printf("\n");

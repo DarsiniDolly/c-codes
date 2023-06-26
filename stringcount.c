@@ -10,7 +10,7 @@ int main()
     fgets(arr, 50, stdin);
     for(i=0;arr[i]!='\0';i++)// terminate the loop when it encounters the null character
     {
-       if(arr[i]==' ')// count the spaces
+       if(arr[i]==' '||arr[i]=='\0'||arr[i]=='\n')// count the spaces
        {
          count++;
        }

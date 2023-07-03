@@ -4,7 +4,7 @@
 
 int main()
 {
-    char n[50];
+    char n[50],filename[50];
     FILE *ptr1;
     FILE *ptr2;
     FILE *ptr3;
@@ -23,51 +23,71 @@ int main()
         return 1;
     }
     
+    printf("the name of the file1:");
+    scanf("%s", filename);
+    int size = strlen(filename);
     printf("the string to be written in bfile1:");
     scanf("%s", n);
     int fsize = strlen(n);
-    printf("The first character in the string: %c\n",n[0]);
+    printf("The first character in the string:%c\n",n[0]);
     printf("The size of the string: %d\n", fsize);
+    fwrite(filename, sizeof(char), size, ptr1);
     fwrite(&n[0], sizeof(char), 1, ptr1);
     fwrite(&fsize, sizeof(int), 1, ptr1);
     fwrite(n, sizeof(char), fsize, ptr1);
     fclose(ptr1);
-
+    
+    printf("the name of the file2:");
+    scanf("%s", filename);
+    size = strlen(filename);
     printf("the string to be written in bfile2:");
     scanf("%s", n);
     fsize = strlen(n);
-    printf("The first character in the string: %c\n",n[0]);
+    printf("The first character in the string:%c\n",n[0]);
     printf("The size of the string: %d\n", fsize);
+    fwrite(filename, sizeof(char), size, ptr2);
     fwrite(&n[0], sizeof(char), 1, ptr2);
     fwrite(&fsize, sizeof(int), 1, ptr2);
     fwrite(n, sizeof(char), fsize, ptr2);
     fclose(ptr2);
-
+    
+    printf("the name of the file3:");
+    scanf("%s", filename);
+    size = strlen(filename);
     printf("the string to be written in bfile3:");
     scanf("%s", n);
     fsize = strlen(n);
-    printf("The first character in the string: %c\n",n[0]);
+    printf("The first character in the string:%c\n",n[0]);
     printf("The size of the string: %d\n", fsize);
+    fwrite(filename, sizeof(char), size, ptr3);
     fwrite(&n[0], sizeof(char), 1, ptr3);
     fwrite(&fsize, sizeof(int), 1, ptr3);
     fwrite(n, sizeof(char), fsize, ptr3);
     fclose(ptr3);
-
+    
+    printf("the name of the file4:");
+    scanf("%s", filename);
+    size = strlen(filename);
     printf("the string to be written in bfile4:");
     scanf("%s", n);
     fsize = strlen(n);
-    printf("The first character in the string: %c\n",n[0]);
+    printf("The first character in the string:%c\n",n[0]);
     printf("The size of the string: %d\n", fsize);
+    fwrite(filename, sizeof(char), size, ptr4);
     fwrite(&n[0], sizeof(char), 1, ptr4);
     fwrite(&fsize, sizeof(int), 1, ptr4);
     fwrite(n, sizeof(char), fsize, ptr4);
     fclose(ptr4);
-
+    
+    printf("the name of the file5:");
+    scanf("%s", filename);
+    size = strlen(filename);
     printf("the string to be written in bfile5:");
     scanf("%s", n);
     fsize = strlen(n);
-    printf("The first character in the string: %c\n",n[0]);
-    printf("The size of the string: %d\n", fsize);
+    printf("The first character in the string:%c\n",n[0]);
+    printf("The size of the string:%d\n", fsize);
+    fwrite(filename, sizeof(char), size, ptr5);
     fwrite(&n[0], sizeof(char), 1, ptr5);
     fwrite(&fsize, sizeof(int), 1, ptr5);
     fwrite(n, sizeof(char), fsize, ptr5);
@@ -121,3 +141,4 @@ int main()
 
     return 0;
 }
+

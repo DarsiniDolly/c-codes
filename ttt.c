@@ -1,3 +1,5 @@
+// this program split the merged files into seperate files from a code signed file.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

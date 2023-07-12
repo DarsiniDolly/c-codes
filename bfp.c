@@ -1,3 +1,6 @@
+// This program consist of code signing and merging the binary files
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

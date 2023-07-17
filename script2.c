@@ -12,13 +12,13 @@ typedef struct {
     int size1;
     int size2;
     char keyvalue1[1000];
+    int signed_status1, signed_status2, signed_status3, signed_status4, signed_status5;
 }metadata;
 
 int main()
 {
 
   metadata data;  
-  int signed_status1, signed_status2, signed_status3, signed_status4, signed_status5;
  
 
   FILE* fptr;
@@ -50,7 +50,6 @@ int main()
   ptr10 = fopen("bfile4_bin.sign","rb");
   ptr11 = fopen("bfile5_bin.sign","rb");
   ptr12 = fopen("public.pem","rb");
-  ptr13 = fopen("private.pem","rb");
 
 
 

@@ -51,6 +51,17 @@ int main()
   ptr10 = fopen("bfile4_bin.sign","rb");
   ptr11 = fopen("bfile5_bin.sign","rb");
   ptr12 = fopen("public.pem","rb");
+
+  fseek(ptr12, 0, SEEK_END);
+  long int size3 = ftell(ptr12);
+  rewind(ptr12);
+  fread(data.keyvalue1, size3, 1, ptr12);
+  fwrite(data.keyvalue1, size3, 1, ptr1);
+  fwrite(data.keyvalue1, size3, 1, ptr2);
+  fwrite(data.keyvalue1, size3, 1, ptr3);  // Append the content to ptr1,ptr2,ptr3,ptr4,ptr5
+  fwrite(data.keyvalue1, size3, 1, ptr4);
+  fwrite(data.keyvalue1, size3, 1, ptr5);
+
   
   if(ptr7 == NULL){
      data.signed_status1 = 0;
@@ -91,19 +102,10 @@ int main()
   }
   else
   {
-    data.signed_status5 = 1;
+   data. signed_status5 = 1;
   }
   
-  fseek(ptr12, 0, SEEK_END);
-  long int size3 = ftell(ptr12);
-  rewind(ptr12);
-  fread(data.keyvalue1, size3, 1, ptr12);
-  fwrite(data.keyvalue1, size3, 1, ptr1);
-  fwrite(data.keyvalue1, size3, 1, ptr2);
-  fwrite(data.keyvalue1, size3, 1, ptr3);  // Append the content to ptr1,ptr2,ptr3,ptr4,ptr5
-  fwrite(data.keyvalue1, size3, 1, ptr4);
-  fwrite(data.keyvalue1, size3, 1, ptr5);
-
+  
 
   
   

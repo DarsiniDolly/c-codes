@@ -87,11 +87,11 @@ int main()
   }
 
   if(ptr11 == NULL){
-     signed_status5 = 0;
+     data.signed_status5 = 0;
   }
   else
   {
-    signed_status5 = 1;
+    data.signed_status5 = 1;
   }
   
   fseek(ptr12, 0, SEEK_END);

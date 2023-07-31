@@ -1,0 +1,22 @@
+
+
+ Step 1: Generate a private key using RSA algorithm with AES-128 encryption and save it to "private.pem". The key size is 4096 bits.
+openssl genrsa -aes128 -out private.pem 4096
+
+ Step 2: Generate a public key from the previously generated private key and save it to "public.pem".
+openssl rsa -in private.pem -pubout -out public.pem
+
+ Step 3: Create a SHA-256 hash of the file "bfp.bin" and sign it using the private key from "private.pem".
+ The signature will be saved to "sign_sha256".
+openssl dgst -sha256 -sign private.pem -out sign_sha256 bfp.bin
+
+ Step 4: Encode the binary signature "sign_sha256" in base64 format and save it to "bfp_bin.sign".
+ This step is often done for easier transmission of the signature.
+openssl base64 -in sign_sha256 -out bfp_bin.sign
+
+ Step 5: Decode the base64-encoded signature "bfp_bin.sign" back to its binary representation and save it to "verif_sha256".
+openssl base64 -d -in bfp_bin.sign -out verif_sha256
+
+ Step 6: Verify the integrity of the "bfp.bin" file by checking its SHA-256 signature using the public key from "public.pem"
+ and the decoded signature from "verif_sha256". If the verification is successful, the output will indicate "Verified OK."
+openssl dgst -sha256 -verify public.pem -signature verif_sha256 bfp.bin
